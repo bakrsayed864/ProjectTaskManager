@@ -1,101 +1,139 @@
 # Project Task Manager API
 
-A simple RESTful API built with **ASP.NET Core (.NET 9)** for managing projects and their tasks. The project was developed as part of a backend technical assessment and focuses on clean architecture, maintainable code, and common backend development practices.
+A RESTful API built with **ASP.NET Core (.NET 9)** for managing projects and their tasks. The project was developed with a focus on writing clean, maintainable, and scalable code using **Clean Architecture** principles.
 
 ## Features
 
 ### Authentication
-- User Registration
-- User Login using JWT Authentication
+
+* User Registration
+* User Login using JWT Authentication
 
 ### Projects
-- Create Project
-- Get All Projects
-- Get Project By Id
-- Update Project
-- Delete Project
+
+* Create Project
+* Get All Projects
+* Get Project By Id
+* Update Project
+* Delete Project
 
 ### Tasks
-- Create Task
-- Update Task Status
-- Get Tasks By Project
-- Delete Task
 
-## Technologies
+* Create Task
+* Get Tasks By Project
+* Update Task Status
+* Delete Task
 
-- ASP.NET Core Web API (.NET 9)
-- Entity Framework Core
-- SQL Server
-- JWT Authentication
-- Mapster
-- Swagger
+## Tech Stack
+
+* ASP.NET Core Web API (.NET 9)
+* Entity Framework Core
+* SQL Server
+* JWT Authentication
+* Mapster
+* Swagger 
 
 ## Architecture
 
-The project follows a layered architecture with clear separation of responsibilities.
+The solution follows the **Clean Architecture** pattern and is organized into four independent layers:
 
-- **Controllers** handle HTTP requests.
-- **Services** contain the business logic.
-- **Repositories** are responsible for data access.
-- **Entity Framework Core** is used for database operations.
-- **Mapster** is used for mapping between DTOs and entities.
-- **DTOs** are used for request and response models.
+```
+Presentation
+Application
+Domain
+Infrastructure
+```
+
+### Layer Responsibilities
+
+* **Presentation**
+
+  * Controllers
+  * Dependency Injection
+  * Swagger configuration
+
+* **Application**
+
+  * Services
+  * DTOs
+  * Business Logic
+  * Mapping
+
+* **Domain**
+
+  * Entities
+  * Enums
+  * Repository Contracts
+
+* **Infrastructure**
+
+  * Entity Framework Core
+  * DbContext
+  * Repository Implementations
+  * Authentication Configuration
+  * Database Migrations
 
 ## Implemented Practices
 
-- Repository Pattern
-- Service Layer
-- Dependency Injection
-- DTO Pattern
-- Global Exception Handling
-- Request Validation using Data Annotations
-- JWT Authentication & Authorization
-- Entity Framework Core Migrations
-- Swagger Documentation
+* Clean Architecture
+* Repository Pattern
+* Service Layer
+* Dependency Injection
+* DTO Pattern
+* Mapster for Object Mapping
+* Global Exception Handling
+* Request Validation using Data Annotations
+* JWT Authentication & Authorization
+* Entity Framework Core Migrations
+* Swagger Documentation
 
 ## Getting Started
 
-1. Clone the repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/bakrsayed864/ProjectTaskManager.git
 ```
 
-2. Update the database connection string in `appsettings.json`.
+### 2. Configure the database
 
-3. Apply migrations
+Update the SQL Server connection string inside:
+
+```
+appsettings.json
+```
+
+### 3. Apply migrations
 
 ```bash
 dotnet ef database update
 ```
 
-4. Run the project
+### 4. Run the application
 
 ```bash
 dotnet run
 ```
 
-5. Open Swagger
+### 5. Open Swagger
 
 ```
-https://localhost:{port}/swagger
+https://localhost:<port>/swagger
 ```
 
 ## Project Structure
 
 ```
-Controllers/
-DTOs/
-Entities/
-Repositories/
-Services/
-Data/
-Migrations/
-Middleware/
+ProjectTaskManager
+│
+├── Presentation
+├── Application
+├── Domain
+└── Infrastructure
 ```
 
 ## Notes
 
-- Authentication is required for protected endpoints.
-- Each authenticated user can manage their own projects and tasks.
-- The project is designed to be simple, clean, and easy to extend.
+* Authentication is required to access protected endpoints.
+* Authenticated Users can manage projects and the tasks that belong to those projects.
+* The project emphasizes clean code, separation of concerns, and maintainability over unnecessary complexity.
