@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="DreamTasks.API/Presentation.csproj" />
+  <Project Path="DreamTasks.Application/Application.csproj" />
+  <Project Path="DreamTasks.Domian/Domain.csproj" />
+  <Project Path="DreamTasks.Infrastructure/Infrastructure.csproj" />
+</Solution>

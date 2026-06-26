@@ -1,0 +1,16 @@
+﻿global using Application.Contracts;
+global using Application.Core.Responses;
+global using Application.DTOs.AccountDTOs;
+global using Domain.Consts;
+global using Domain.Helpers;
+global using Infrastructure.Data;
+global using MapsterMapper;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.UI.Services;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.Extensions.Configuration;
+global using System.Data;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Security.Claims;
+global using System.Web;
