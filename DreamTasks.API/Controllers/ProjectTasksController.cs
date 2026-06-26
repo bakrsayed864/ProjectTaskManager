@@ -1,12 +1,14 @@
 ﻿using Application.Contracts.Services;
 using Application.DTOs.ProjectDTOs;
 using Application.DTOs.ProjectTasksDTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ProjectTasksController(IProjectTaskService projectTaskService) : BaseApiController
 {
     private readonly IProjectTaskService _projectTaskService = projectTaskService;

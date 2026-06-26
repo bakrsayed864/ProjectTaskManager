@@ -1,11 +1,13 @@
 ﻿using Application.Contracts.Services;
 using Application.DTOs.ProjectDTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ProjectsController(IProjectService projectService) : BaseApiController
 {
     private readonly IProjectService _projectService = projectService;
