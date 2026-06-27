@@ -16,4 +16,5 @@ public interface IProjectTaskRepository
 
     Task DeleteAsync(ProjectTask projectTask);
 
+    Task<bool> IsExist(string name, Guid ProjectId, Guid? Id = null);
 }

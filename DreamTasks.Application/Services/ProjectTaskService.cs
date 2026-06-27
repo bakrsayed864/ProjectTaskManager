@@ -12,6 +12,11 @@ public class ProjectTaskService(IProjectTaskRepository projectTaskRepository, IM
      
     public async Task<Result<ProjectTaskToReturnDTO>> CreateAsync(ProjectTaskToCreateDTO dto)
     {
+        //check task title is existance within same project
+        var isExist = await _projectTaskRepository.IsExist(dto.Title, dto.ProjectId);
+        if (isExist)
+            return Result.Failure<ProjectTaskToReturnDTO>(Error.Conflict("Same task title is exist for this project before"));
+
         //map dto to model
         var projectTask = _mapper.Map<ProjectTask>(dto);
 
