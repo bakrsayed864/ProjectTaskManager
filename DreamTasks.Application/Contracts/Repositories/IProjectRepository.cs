@@ -16,4 +16,5 @@ public interface IProjectRepository
 
     Task<int> CountAsync();
 
+    Task<bool> IsExist(string name, Guid? Id=null);
 }

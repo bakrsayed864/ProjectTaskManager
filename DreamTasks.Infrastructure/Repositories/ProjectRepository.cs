@@ -49,4 +49,8 @@ public class ProjectRepository(ApplicationDbContext context) : IProjectRepositor
     public async Task<int> CountAsync()
       => await _context.Projects.CountAsync();
 
+    //Id sent while updating and not while creating
+    public async Task<bool> IsExist(string name, Guid? Id = null)
+        => Id == null ? await _context.Projects.AnyAsync(x => x.Name == name) : await _context.Projects.AnyAsync(x => x.Name == name && x.Id != Id);
+    
 }

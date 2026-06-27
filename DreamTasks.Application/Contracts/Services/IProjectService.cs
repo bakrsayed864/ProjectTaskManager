@@ -4,9 +4,9 @@ namespace Application.Contracts.Services;
 
 public interface IProjectService 
 {
-    Task<Result> CreateAsync(ProjectToCreateDTO dto);
+    Task<Result<ProjectToReturnDTO>> CreateAsync(ProjectToCreateDTO dto);
 
-    Task<Result> UpdateAsync(Guid Id, ProjectToUpdateDTO dto);
+    Task<Result<ProjectToReturnDTO>> UpdateAsync(Guid Id, ProjectToUpdateDTO dto);
 
     Task<Result> DeleteAsync(Guid id);
 

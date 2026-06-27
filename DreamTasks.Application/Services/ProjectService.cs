@@ -11,10 +11,16 @@ public class ProjectService(IProjectRepository projectRepository,
     private readonly IProjectRepository _projectRepository = projectRepository;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<Result> CreateAsync(ProjectToCreateDTO dto)
+    public async Task<Result<ProjectToReturnDTO>> CreateAsync(ProjectToCreateDTO dto)
     {
+        // validate that projecct name is not exist
+        var IsExist = await _projectRepository.IsExist(dto.Name);
+        if (IsExist)
+            return Result.Failure<ProjectToReturnDTO>(Error.InvalidOperation("Project with same name is exist before"));
+
         //map to entity
         var project = _mapper.Map<Project>(dto);
+
 
         //try to save in database
         try
@@ -22,10 +28,10 @@ public class ProjectService(IProjectRepository projectRepository,
             await _projectRepository.CreateAsync(project);
         }catch(Exception ex)
         {
-            return Result.Failure(Error.InvalidOperation($"An error occured while saving project in database, Exception: {ex.Message}"));
+            return Result.Failure<ProjectToReturnDTO>(Error.InvalidOperation($"An error occured while saving project in database, Exception: {ex.Message}"));
         }
 
-        return Result.Success();
+        return Result.Success(_mapper.Map<ProjectToReturnDTO>(project));
     }
 
     public async Task<Result> DeleteAsync(Guid id)
@@ -74,16 +80,21 @@ public class ProjectService(IProjectRepository projectRepository,
     }
 
 
-    public async Task<Result> UpdateAsync(Guid id, ProjectToUpdateDTO dto)
+    public async Task<Result<ProjectToReturnDTO>> UpdateAsync(Guid id, ProjectToUpdateDTO dto)
     {
+        //validate name existance in case it is changed
+        var isExist = await _projectRepository.IsExist(dto.Name, id);
+        if (isExist)
+            return Result.Failure<ProjectToReturnDTO>(Error.InvalidOperation("Project With same name is exist before"));
+
         //get project 
         var projectToUpdate = await _projectRepository.GetByIdAsync(id);
 
         if (projectToUpdate is null)
-            return Result.Failure(Error.NotFound("Project"));
+            return Result.Failure<ProjectToReturnDTO>(Error.NotFound("Project"));
 
         //map dto to project
-        dto.Adapt(projectToUpdate);
+        dto.Adapt(projectToUpdate); 
 
         try
         {
@@ -91,9 +102,9 @@ public class ProjectService(IProjectRepository projectRepository,
         }
         catch(Exception ex)
         {
-            return Result.Failure(Error.InvalidOperation($"Ann error occurred while updating project, Exception:{ex.Message}"));
+            return Result.Failure<ProjectToReturnDTO>(Error.InvalidOperation($"Ann error occurred while updating project, Exception:{ex.Message}"));
         }
 
-        return Result.Success();
+        return Result.Success(_mapper.Map<ProjectToReturnDTO>(projectToUpdate));
     }
 }
