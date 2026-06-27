@@ -29,17 +29,32 @@ builder.Services.AddSwaggerGen(c =>
 
 
 
-	// JWT Auth
-	c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
-	{
-		Name = "Authorization",
-		Type = SecuritySchemeType.Http,
-		Scheme = JwtBearerDefaults.AuthenticationScheme,
-		BearerFormat = "JWT",
-		In = ParameterLocation.Header,
-		Description = "Enter JWT token only (without Bearer)"
-	});
+    // JWT Auth
+    c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme,
+    new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter only the JWT token."
+    });
 
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+{
+    {
+        new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = JwtBearerDefaults.AuthenticationScheme
+            }
+        },
+        Array.Empty<string>()
+    }
+});
 
 });
 

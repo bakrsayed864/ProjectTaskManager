@@ -1,24 +1,39 @@
-﻿
+﻿using Application.Enums;
+
 namespace Application.Core.Responses;
 
-public sealed record Error(string Message)
+public sealed record Error(ErrorCode Code, string Message)
 {
+	public static readonly Error None = new(ErrorCode.None, string.Empty);
+
+	public static Error Default(string? message = null)
+		=> new(ErrorCode.BadRequest, message ?? "An error occurred.");
+
 	public static Error NotFound(string resource = "Resource")
-		=> new($"{resource} was not found.");
+		=> new(ErrorCode.NotFound, $"{resource} was not found.");
 
 	public static Error AlreadyExists(string resource = "Resource")
-		=> new($"{resource} already exists.");
+		=> new(ErrorCode.AlreadyExists, $"{resource} already exists.");
 
 	public static Error InvalidInput(string? message = null)
-		=> new(message ?? "Invalid input.");
+		=> new(ErrorCode.Validation, message ?? "Invalid input.");
 
 	public static Error InvalidOperation(string? message = null)
-		=> new(message ?? "Invalid Operation.");
+		=> new(ErrorCode.Validation, message ?? "Invalid Operation.");
 
 	public static Error Validation(string? message = null)
-		=> new(message ?? "Validation failed.");
+		=> new(ErrorCode.Validation, message ?? "Validation failed.");
 
 	public static Error Unauthorized(string? message = null)
-		=> new(message ?? "Unauthorized.");
+		=> new(ErrorCode.Unauthorized, message ?? "Unauthorized.");
+
+	public static Error Forbidden(string? message = null)
+		=> new(ErrorCode.Forbidden, message ?? "Forbidden.");
+
+	public static Error Conflict(string? message = null)
+		=> new(ErrorCode.Conflict, message ?? "Conflict occurred.");
+
+	public static Error DatabaseError(string? message = null)
+		=> new(ErrorCode.DatabaseError, message ?? "Database error occurred.");
 
 }
